@@ -7,7 +7,7 @@
     "dev": "nodemon src/index.ts",
     "db:seed": "npx ts-node src/database/seeders/index.ts",
     "start-server": "npm run dev",
-    "test": "jest"
+    "test": "jest --runInBand --detectOpenHandles --forceExit"
   },
   "author": "ozgurhalilince",
   "license": "ISC",
