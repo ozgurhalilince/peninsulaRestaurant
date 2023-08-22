@@ -9,7 +9,7 @@ import config from "./utils/config";
 
 const app = new Koa()
 
-mongoose.connect(config.mongoUri, { dbName: config.dbName })
+mongoose.connect(config.mongoUri, { dbName: config.nodeEnv !== 'test' ? config.dbName : config.testDbName })
 mongoose.connection.on('error', console.error)
 
 app.use(koaBody())
@@ -18,4 +18,8 @@ app.use(cors())
 app.use(jwt({ secret: `${config.jwtSecret}` }).unless({ path: [/^\/api\/v1\/auth/] }));
 app.use(router.routes()).use(router.allowedMethods())
 
-app.listen(config.appPort)
+if (config.nodeEnv !== 'test') {
+    app.listen(config.appPort)
+}
+
+export default app
