@@ -1,5 +1,11 @@
 import apiMessages from "../../../utils/apiMessages";
 
+export interface IStoreRequest {
+    name: string;
+    seatCount: number,
+    description: string,
+}
+
 export default {
     validate: (requestBody: { name: string; seatCount: number }) => {
         if (typeof requestBody === 'undefined') {

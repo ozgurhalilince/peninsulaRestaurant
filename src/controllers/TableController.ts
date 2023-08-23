@@ -1,7 +1,8 @@
 import { Context } from 'koa'
 import TableRepository from "../repositories/TableRepository";
 import apiMessages from "../utils/apiMessages";
-import StoreTableRequest from "../http/requests/table/StoreRequest";
+import StoreTableRequest, { IStoreRequest} from "../http/requests/table/StoreRequest";
+import { IUpdateRequest} from "../http/requests/table/UpdateRequest";
 
 export default {
   index: async (ctx: Context): Promise<any> => {
@@ -17,7 +18,8 @@ export default {
   },
   store: async (ctx: Context): Promise<any> => {
     try {
-      const validationResult = StoreTableRequest.validate(ctx.request.body);
+      const request = <IStoreRequest>ctx.request.body;
+      const validationResult = StoreTableRequest.validate(request);
 
       if (validationResult.error) {
         ctx.status = 400
@@ -25,7 +27,7 @@ export default {
         return
       }
 
-      const dbTable = await TableRepository.get(['id'], ctx.request.body.name)
+      const dbTable = await TableRepository.get(['id'], request.name)
 
       if (dbTable.length > 0) {
         ctx.status = 400
@@ -34,9 +36,9 @@ export default {
       }
 
       const table = await TableRepository.create({
-        name: ctx.request.body.name,
-        seatCount: ctx.request.body.seatCount,
-        description: ctx.request.body.description,
+        name: request.name,
+        seatCount: request.seatCount,
+        description: request.description,
       })
       ctx.status = 201
       ctx.body = { data: table }
@@ -64,6 +66,7 @@ export default {
   },
   update: async (ctx: Context): Promise<any> => {
     try {
+      const request = <IUpdateRequest>ctx.request.body;
       const table = await TableRepository.getById(['id', 'name', 'description', 'seatCount'], ctx.params.id)
 
       if (!table) {
@@ -74,7 +77,7 @@ export default {
 
       // @TODO Check active reservations for seat count, if higher block updating
 
-      await TableRepository.update(ctx.params.id, ctx.request.body.seatCount, ctx.request.body.description)
+      await TableRepository.update(ctx.params.id, request.seatCount, request.description)
 
       ctx.status = 204
     } catch (error: any) {
