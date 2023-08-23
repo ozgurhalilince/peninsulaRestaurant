@@ -11,7 +11,7 @@ export default {
       ctx.status = 200
       ctx.body = { data: tables }
     } catch (error: any) {
-      ctx.status = 500;
+      ctx.status = 500
       ctx.body = { message: error.message }
     }
   },
@@ -41,7 +41,7 @@ export default {
       ctx.status = 201
       ctx.body = { data: table }
     } catch (error: any) {
-      ctx.status = 500;
+      ctx.status = 500
       ctx.body = { message: error.message }
     }
   },
@@ -50,7 +50,7 @@ export default {
       const table = await TableRepository.getById(['id', 'name', 'description', 'seatCount'], ctx.params.id)
 
       if (!table) {
-        ctx.status = 400;
+        ctx.status = 400
         ctx.body = apiMessages[1043]
         return
       }
@@ -58,7 +58,7 @@ export default {
       ctx.status = 200
       ctx.body = { data: table }
     } catch (error: any) {
-      ctx.status = 500;
+      ctx.status = 500
       ctx.body = { message: error.message }
     }
   },
@@ -67,7 +67,7 @@ export default {
       const table = await TableRepository.getById(['id', 'name', 'description', 'seatCount'], ctx.params.id)
 
       if (!table) {
-        ctx.status = 400;
+        ctx.status = 400
         ctx.body = apiMessages[1043]
         return
       }
@@ -78,7 +78,7 @@ export default {
 
       ctx.status = 204
     } catch (error: any) {
-      ctx.status = error.statusCode || error.status || 500;
+      ctx.status = 500
       ctx.body = { message: error.message }
     }
   },
@@ -87,7 +87,7 @@ export default {
       const table = await TableRepository.getById(['id', 'name', 'description', 'seatCount'], ctx.params.id)
 
       if (!table) {
-        ctx.status = 400;
+        ctx.status = 400
         ctx.body = apiMessages[1043]
         return
       }
@@ -97,7 +97,7 @@ export default {
 
       ctx.status = 204
     } catch (error: any) {
-      ctx.status = error.statusCode || error.status || 500;
+      ctx.status = 500
       ctx.body = { message: error.message }
     }
   },

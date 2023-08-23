@@ -118,6 +118,24 @@ describe('table tests', () => {
             });
     })
 
+    it('store - should create table', (done) => {
+        request(server.callback())
+            .post('/api/v1/tables')
+            .set('Accept', 'application/json')
+            .set('Authorization', 'Bearer ' + token)
+            .send({
+                name: 'Portugal',
+                seatCount: 10,
+            })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end(function(err, response) {
+                if (err) return done(err);
+                return done();
+            });
+    })
+
     it('should throw 401 if no authorization header', (done) => {
         request(server.callback())
             .get('/api/v1/tables')
