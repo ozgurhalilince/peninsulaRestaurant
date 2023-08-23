@@ -7,6 +7,10 @@ export interface ILoginRequest {
 
 export default {
     validate: (requestBody: { email: string; password: string }) => {
+        if (typeof requestBody === 'undefined') {
+            return { error: true, response: apiMessages[1001] }
+        }
+
         if (!requestBody.email) {
             return { error: true, response: apiMessages[1001] }
         }

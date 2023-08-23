@@ -9,6 +9,10 @@ export interface IRegisterRequest {
 
 export default {
     validate: (requestBody: { email: string; password: string; firstname: string; lastname: string }) => {
+        if (typeof requestBody === 'undefined') {
+            return { error: true, response: apiMessages[1001] }
+        }
+
         if (!requestBody.email) {
             return { error: true, response: apiMessages[1001] }
         }
