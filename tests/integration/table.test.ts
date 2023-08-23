@@ -180,6 +180,93 @@ describe('table tests', () => {
         })
     })
 
+    it('update - should return not found response', (done) => {
+        request(server.callback())
+            .put('/api/v1/tables/' + (new ObjectId()).toString())
+            .set('Accept', 'application/json')
+            .set('Authorization', 'Bearer ' + token)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(400, apiMessages[1043])
+            .end(function(err, response) {
+                if (err) return done(err);
+
+                return done();
+            });
+    })
+
+    it('update - should update', (done) => {
+        Table.create({
+            name: 'Spain',
+            seatCount: 10,
+        }).then((createdTable) => {
+            request(server.callback())
+                .put('/api/v1/tables/' + createdTable._id.toString())
+                .send({
+                    seatCount: 3,
+                    description: 'some text',
+                })
+                .set('Accept', 'application/json')
+                .set('Authorization', 'Bearer ' + token)
+                .set('Accept', 'application/json')
+                .expect(204)
+                .end(function(err, response) {
+                    if (err) return done(err);
+                    
+                    Table.findById(createdTable._id.toString())
+                        .select(['id', 'seatCount', 'description'])
+                        .exec()
+                        .then((result) => {
+                            expect(result?.seatCount).toEqual(3)
+                            expect(result?.description).toEqual('some text')
+                        })
+
+                    return done()
+                });
+        })
+    })
+
+    it('destroy - should return not found response', (done) => {
+        request(server.callback())
+            .del('/api/v1/tables/' + (new ObjectId()).toString())
+            .set('Accept', 'application/json')
+            .set('Authorization', 'Bearer ' + token)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(400, apiMessages[1043])
+            .end(function(err, response) {
+                if (err) return done(err);
+
+                return done();
+            });
+    })
+
+    it('destroy - should delete', (done) => {
+        Table.create({
+            name: 'Netherlands',
+            seatCount: 10,
+        }).then((createdTable) => {
+            request(server.callback())
+                .del('/api/v1/tables/' + createdTable._id.toString())
+                .set('Accept', 'application/json')
+                .set('Authorization', 'Bearer ' + token)
+                .set('Accept', 'application/json')
+                .expect(204)
+                .end(function(err, response) {
+                    if (err) return done(err);
+                    
+                    Table.findById(createdTable._id.toString())
+                        .select(['id', 'isDeleted'])
+                        .exec()
+                        .then((result) => {
+                            expect(result?.isDeleted).toEqual(true)
+                        })
+
+                    return done()
+                });
+        })
+    })
+
     it('should throw 401 if no authorization header', (done) => {
         request(server.callback())
             .get('/api/v1/tables')
