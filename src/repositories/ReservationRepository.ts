@@ -1,7 +1,7 @@
 import Reservation from "../models/Reservation";
 
 export default {
-    get: async(status?: String, date?: String) => {
+    get: async(status?: string, date?: string) => {
         const filters: Record<string, any> = {}
 
         filters.status = 'active'
@@ -17,11 +17,11 @@ export default {
         return Reservation.find(filters).exec()
     },
     create: async (fields: {
-        customerFirstname: String;
-        customerLastname: Number;
-        numberOfPeople: String;
-        date: String;
-        table: String;
+        customerFirstname: string;
+        customerLastname: string;
+        numberOfPeople: number;
+        date: string;
+        table: string;
     }) => {
         return Reservation.create(fields)
     },
@@ -29,10 +29,10 @@ export default {
         return Reservation.findById(id).select(fields).exec()
     },
     update: async (
-        id: String,
-        customerFirstname?: String,
-        customerLastname?: String,
-        status?: String
+        id: string,
+        customerFirstname?: string,
+        customerLastname?: string,
+        status?: string
     ) => {
         const updateData: Record<string, any> = {}
 

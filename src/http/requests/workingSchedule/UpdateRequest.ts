@@ -1,7 +1,7 @@
 import apiMessages from "../../../utils/apiMessages";
 
 export default {
-    validate: (requestBody: { name: String; seatCount: Number }) => {
+    validate: (requestBody: { name: string; seatCount: number }) => {
         if (!requestBody.name) {
             return { error: true, response: apiMessages[1040] }
         }

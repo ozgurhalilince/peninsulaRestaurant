@@ -4,10 +4,10 @@ export default {
     get: async(fields: string[]) => {
         return User.find().select(fields)
     },
-    getByEmail: async(email: String, fields: string[]) => {
+    getByEmail: async(email: string, fields: string[]) => {
         return User.findOne({ email}).select(fields)
     },
-    create: async (fields: { password: String; firstname: String; email: String; lastname: String }) => {
+    create: async (fields: { password: string; firstname: string; email: string; lastname: string }) => {
         return User.create(fields)
     }
 }

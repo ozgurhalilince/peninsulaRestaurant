@@ -10,8 +10,8 @@ import jsonwebtoken from 'jsonwebtoken'
 export default {
     register: async (ctx: Context): Promise<any> => {
         try {
-            const data = <IRegisterRequest>ctx.request.body;
-            const validationResult = RegisterRequest.validate(data);
+            const request = <IRegisterRequest>ctx.request.body;
+            const validationResult = RegisterRequest.validate(request);
 
             if (validationResult.error) {
                 ctx.status = 400;
@@ -19,7 +19,7 @@ export default {
                 return
             }
 
-            const dbUser = await UserRepository.getByEmail(data.email, ['id'])
+            const dbUser = await UserRepository.getByEmail(request.email, ['id'])
 
             if (dbUser) {
                 ctx.status = 400;
@@ -28,10 +28,10 @@ export default {
             }
 
             await UserRepository.create({
-                email: data.email,
-                password: bcrypt.hashSync(data.password, 5),
-                firstname: data.firstname,
-                lastname: data.lastname,
+                email: request.email,
+                password: bcrypt.hashSync(request.password, 5),
+                firstname: request.firstname,
+                lastname: request.lastname,
             })
             ctx.status = 201
             ctx.body = apiMessages[2001]
@@ -42,8 +42,8 @@ export default {
     },
     login: async (ctx: Context): Promise<any> => {
         try {
-            const data = <ILoginRequest>ctx.request.body;
-            const validationResult = LoginRequest.validate(data);
+            const request = <ILoginRequest>ctx.request.body;
+            const validationResult = LoginRequest.validate(request);
 
             if (validationResult.error) {
                 ctx.status = 400;
@@ -51,9 +51,9 @@ export default {
                 return
             }
 
-            const dbUser = await UserRepository.getByEmail(data.email, ['password'])
+            const dbUser = await UserRepository.getByEmail(request.email, ['password'])
 
-            if (!dbUser || !bcrypt.compareSync(data.password, dbUser.password)) {
+            if (!dbUser || !bcrypt.compareSync(request.password, dbUser.password)) {
                 ctx.status = 400;
                 ctx.body = apiMessages[1020]
                 return

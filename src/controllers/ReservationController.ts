@@ -1,6 +1,6 @@
 import { Context } from 'koa'
 import ReservationRepository from "../repositories/ReservationRepository";
-import StoreRequest from "../http/requests/reservation/StoreRequest";
+import StoreRequest, { IStoreRequest } from "../http/requests/reservation/StoreRequest";
 import TableRepository from "../repositories/TableRepository";
 import apiMessages from "../utils/apiMessages";
 import WorkingScheduleRepository from "../repositories/WorkingScheduleRepository";
@@ -20,7 +20,8 @@ export default {
     },
     store: async (ctx: Context): Promise<any> => {
         try {
-            const validationResult = StoreRequest.validate(ctx.request.body);
+            const request = <IStoreRequest>ctx.request.body;
+            const validationResult = StoreRequest.validate(request);
 
             if (validationResult.error) {
                 ctx.status = 400;
@@ -28,19 +29,19 @@ export default {
                 return
             }
 
-            const table = await TableRepository.getById(['id', 'seatCount'], ctx.request.body.tableId)
+            const table = await TableRepository.getById(['id', 'seatCount'], request.tableId)
 
             if (!table) {
                 ctx.status = 400;
                 ctx.body = apiMessages[1043]
                 return
-            } else if (table.seatCount < ctx.request.body.numberOfPeople) {
+            } else if (table.seatCount < request.numberOfPeople) {
                 ctx.status = 400;
                 ctx.body = apiMessages[1073]
                 return
             }
 
-            const date = new Date(ctx.request.body.date)
+            const date = new Date(request.date)
             const requestedDayIndex = date.getUTCDay()
             const requestedHour = date.getHours()
             const workingScheduleDay = await WorkingScheduleRepository.getByDayIndex(requestedDayIndex);
@@ -67,7 +68,7 @@ export default {
                 return
             }
 
-            const activeReservation = await ReservationRepository.get('active', ctx.request.body.date)
+            const activeReservation = await ReservationRepository.get('active', request.date)
 
             if (activeReservation.length > 0) {
                 ctx.status = 400;
@@ -76,11 +77,11 @@ export default {
             }
 
             const reservation = await ReservationRepository.create({
-                customerFirstname: ctx.request.body.customerFirstname,
-                customerLastname: ctx.request.body.customerLastname,
-                numberOfPeople: ctx.request.body.numberOfPeople,
-                date: ctx.request.body.date,
-                table: ctx.request.body.tableId,
+                customerFirstname: request.customerFirstname,
+                customerLastname: request.customerLastname,
+                numberOfPeople: request.numberOfPeople,
+                date: request.date,
+                table: request.tableId,
             })
             ctx.status = 201
             ctx.body = { data: reservation }

@@ -1,12 +1,20 @@
 import apiMessages from "../../../utils/apiMessages";
 
+export interface IStoreRequest {
+    date: string;
+    numberOfPeople: number,
+    tableId: string,
+    customerFirstname: string,
+    customerLastname: string,
+}
+
 export default {
     validate: (requestBody: {
-        date: String;
-        numberOfPeople: Number,
-        tableId: String,
-        customerFirstname: String,
-        customerLastname: String,
+        date: string;
+        numberOfPeople: number,
+        tableId: string,
+        customerFirstname: string,
+        customerLastname: string,
     }) => {
         if (!requestBody.date) {
             return { error: true, response: apiMessages[1070] }

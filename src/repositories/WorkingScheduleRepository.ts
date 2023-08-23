@@ -10,7 +10,7 @@ export default {
     getByDayIndex: async(utcDayIndex: number) => {
         return WorkingSchedule.findOne({ utcDayIndex: utcDayIndex }).exec()
     },
-    update: async (id: String, openingTime?: Number, closingTime?: Number, isOpen?: Boolean) => {
+    update: async (id: string, openingTime?: number, closingTime?: number, isOpen?: Boolean) => {
         const updateData: Record<string, any> = {}
 
         if (typeof openingTime !== 'undefined') {

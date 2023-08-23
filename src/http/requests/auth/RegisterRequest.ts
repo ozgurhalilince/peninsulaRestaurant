@@ -1,14 +1,14 @@
 import apiMessages from "../../../utils/apiMessages";
 
 export interface IRegisterRequest {
-    email: String,
+    email: string,
     password: string,
-    firstname: String,
-    lastname: String,
+    firstname: string,
+    lastname: string,
 }
 
 export default {
-    validate: (requestBody: { email: String; password: String; firstname: String; lastname: String }) => {
+    validate: (requestBody: { email: string; password: string; firstname: string; lastname: string }) => {
         if (!requestBody.email) {
             return { error: true, response: apiMessages[1001] }
         }
