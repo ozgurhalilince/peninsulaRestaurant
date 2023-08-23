@@ -6,6 +6,7 @@ import Table from "../../src/models/Table";
 import User from "../../src/models/User";
 import bcrypt from "bcryptjs";
 import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 const dummyTables = [
     {
@@ -134,6 +135,49 @@ describe('table tests', () => {
                 if (err) return done(err);
                 return done();
             });
+    })
+
+    it('show - should return not found response', (done) => {
+        request(server.callback())
+            .get('/api/v1/tables/' + (new ObjectId()).toString())
+            .set('Accept', 'application/json')
+            .set('Authorization', 'Bearer ' + token)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(400, apiMessages[1043])
+            .end(function(err, response) {
+                if (err) return done(err);
+
+                return done();
+            });
+    })
+
+    it('show - should return table details', (done) => {
+        Table.create({
+            name: 'Germany',
+            seatCount: 10,
+        }).then((createdTable) => {
+            request(server.callback())
+                .get('/api/v1/tables/' + createdTable._id.toString())
+                .set('Accept', 'application/json')
+                .set('Authorization', 'Bearer ' + token)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function(err, response) {
+                    if (err) return done(err);
+
+                    expect(response.body).toHaveProperty('data')
+                    expect(response.body.data).toHaveProperty('_id')
+                    expect(response.body.data).toHaveProperty('name')
+                    expect(response.body.data).toHaveProperty('seatCount')
+                    expect(response.body.data._id).toEqual(createdTable._id.toString())
+                    expect(response.body.data.name).toEqual(createdTable.name)
+                    expect(response.body.data.seatCount).toEqual(createdTable.seatCount)
+
+                    return done();
+                });
+        })
     })
 
     it('should throw 401 if no authorization header', (done) => {
