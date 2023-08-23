@@ -8,23 +8,12 @@ import bcrypt from "bcryptjs";
 import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
 
-const dummyTables = [
-    {
-        name: 'Denmark',
-        description: 'Denmark table',
-        seatCount: 10,
-    },
-    {
-        name: 'Turkey',
-        description: 'Turkey table',
-        seatCount: 15,
-    }
-];
 let token: null|string = null;
 
 beforeAll((done) => {
     mongoose.connection.dropDatabase()
 
+    // @TODO create method for token
     const userData = {
         firstname: 'John',
         lastname: 'Doe',
@@ -310,3 +299,16 @@ describe('table tests', () => {
             });
     })
 })
+
+const dummyTables = [
+    {
+        name: 'Denmark',
+        description: 'Denmark table',
+        seatCount: 10,
+    },
+    {
+        name: 'Turkey',
+        description: 'Turkey table',
+        seatCount: 15,
+    }
+];

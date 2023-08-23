@@ -17,7 +17,7 @@ export default {
         customerLastname: string,
     }) => {
         if (typeof requestBody === 'undefined') {
-            return { error: true, response: apiMessages[1001] }
+            return { error: true, response: apiMessages[1070] }
         }
 
         if (!requestBody.date) {

@@ -1,19 +1,7 @@
 import apiMessages from "../../../utils/apiMessages";
 
-export default {
-    validate: (requestBody: { name: string; seatCount: number }) => {
-        if (typeof requestBody === 'undefined') {
-            return { error: true, response: apiMessages[1001] }
-        }
-
-        if (!requestBody.name) {
-            return { error: true, response: apiMessages[1040] }
-        }
-
-        if (!requestBody.seatCount) {
-            return { error: true, response: apiMessages[1041] }
-        }
-
-        return { error: false }
-    }
+export interface IUpdateRequest {
+    closingTime: number;
+    openingTime: number,
+    isOpen: boolean,
 }

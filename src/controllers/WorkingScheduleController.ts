@@ -1,6 +1,7 @@
 import { Context } from 'koa'
 import WorkingScheduleRepository from "../repositories/WorkingScheduleRepository";
 import apiMessages from "../utils/apiMessages";
+import { IUpdateRequest } from 'src/http/requests/workingSchedule/UpdateRequest';
 
 export default {
     index: async (ctx: Context): Promise<any> => {
@@ -25,45 +26,45 @@ export default {
                 return
             }
 
-            const requestBody = ctx.request.body;
+            const request = <IUpdateRequest>ctx.request.body;
             let isOpeningTimeLater = false
 
-            if (requestBody.closingTime) {
-                if (requestBody.closingTime > 24) {
+            if (request.closingTime) {
+                if (request.closingTime > 24) {
                     ctx.status = 400
                     ctx.body = apiMessages[1056]
                     return
-                } else if (requestBody.closingTime < 1) {
+                } else if (request.closingTime < 1) {
                     ctx.status = 400
                     ctx.body = apiMessages[1055]
                     return
                 }
 
-                if (requestBody.openingTime && requestBody.closingTime <= requestBody.openingTime) {
+                if (request.openingTime && request.closingTime <= request.openingTime) {
                     isOpeningTimeLater = true
                 }
 
-                if (requestBody.closingTime <= workingSchedule.openingTime) {
+                if (request.closingTime <= workingSchedule.openingTime) {
                     isOpeningTimeLater = true
                 }
             }
 
-            if (requestBody.openingTime) {
-                if (requestBody.openingTime > 23) {
+            if (request.openingTime) {
+                if (request.openingTime > 23) {
                     ctx.status = 400
                     ctx.body = apiMessages[1054]
                     return
-                } else if (requestBody.openingTime < 0) {
+                } else if (request.openingTime < 0) {
                     ctx.status = 400
                     ctx.body = apiMessages[1053]
                     return
                 }
 
-                if (requestBody.closingTime && requestBody.closingTime <= requestBody.openingTime) {
+                if (request.closingTime && request.closingTime <= request.openingTime) {
                     isOpeningTimeLater = true
                 }
 
-                if (workingSchedule.closingTime <= requestBody.openingTime) {
+                if (workingSchedule.closingTime <= request.openingTime) {
                     isOpeningTimeLater = true
                 }
             }
@@ -78,9 +79,9 @@ export default {
 
             await WorkingScheduleRepository.update(
                 ctx.params.id,
-                requestBody.openingTime,
-                requestBody.closingTime,
-                requestBody.isOpen
+                request.openingTime,
+                request.closingTime,
+                request.isOpen
             )
 
             ctx.status = 204
