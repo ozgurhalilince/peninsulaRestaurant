@@ -24,7 +24,7 @@ export default {
             const validationResult = StoreRequest.validate(request);
 
             if (validationResult.error) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = validationResult.response
                 return
             }
@@ -32,11 +32,11 @@ export default {
             const table = await TableRepository.getById(['id', 'seatCount'], request.tableId)
 
             if (!table) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1043]
                 return
             } else if (table.seatCount < request.numberOfPeople) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1073]
                 return
             }
@@ -47,23 +47,23 @@ export default {
             const workingScheduleDay = await WorkingScheduleRepository.getByDayIndex(requestedDayIndex);
 
             if (!workingScheduleDay) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1077]
                 return
             }
 
             if (!workingScheduleDay.isOpen) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1076]
                 return
             }
 
             if (workingScheduleDay.openingTime > requestedHour) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1076]
                 return
             } else if (workingScheduleDay.closingTime < requestedHour) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1076]
                 return
             }
@@ -71,7 +71,7 @@ export default {
             const activeReservation = await ReservationRepository.get('active', request.date)
 
             if (activeReservation.length > 0) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1078]
                 return
             }
@@ -86,7 +86,7 @@ export default {
             ctx.status = 201
             ctx.body = { data: reservation }
         } catch (error: any) {
-            ctx.status = 500;
+            ctx.status = 500
             ctx.body = { message: error.message }
         }
     },
@@ -95,14 +95,14 @@ export default {
             const reservation = await ReservationRepository.getById(['id', 'status'], ctx.params.id)
 
             if (!reservation) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1079]
                 return
             }
 
             if (typeof ctx.request.body.status !== 'undefined'
                 && !ReservationEnums.ALL_AVAILABLE_STATUSES.includes(ctx.request.body.status)) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1080]
                 return
             }
@@ -120,7 +120,7 @@ export default {
 
             ctx.status = 204
         } catch (error: any) {
-            ctx.status = error.statusCode || error.status || 500;
+            ctx.status = 500
             ctx.body = { message: error.message }
         }
     },
@@ -129,7 +129,7 @@ export default {
             const reservation = await ReservationRepository.getById(['id', 'status'], ctx.params.id)
 
             if (!reservation) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1079]
                 return
             }
@@ -143,7 +143,7 @@ export default {
 
             ctx.status = 204
         } catch (error: any) {
-            ctx.status = error.statusCode || error.status || 500;
+            ctx.status = 500
             ctx.body = { message: error.message }
         }
     },

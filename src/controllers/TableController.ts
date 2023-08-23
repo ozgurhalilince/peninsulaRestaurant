@@ -20,7 +20,7 @@ export default {
       const validationResult = StoreTableRequest.validate(ctx.request.body);
 
       if (validationResult.error) {
-        ctx.status = 400;
+        ctx.status = 400
         ctx.body = validationResult.response
         return
       }
@@ -28,7 +28,7 @@ export default {
       const dbTable = await TableRepository.get(['id'], ctx.request.body.name)
 
       if (dbTable.length > 0) {
-        ctx.status = 400;
+        ctx.status = 400
         ctx.body = apiMessages[1042]
         return
       }

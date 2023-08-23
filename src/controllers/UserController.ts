@@ -10,7 +10,7 @@ export default {
       ctx.status = 200
       ctx.body = { data: users }
     } catch (error: any) {
-      ctx.status = error.statusCode || error.status || 500;
+      ctx.status = 500
       ctx.body = { message: error.message }
     }
   }

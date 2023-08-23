@@ -13,7 +13,11 @@ mongoose.connect(config.mongoUri, { dbName: config.nodeEnv !== 'test' ? config.d
 mongoose.connection.on('error', console.error)
 
 app.use(koaBody())
-app.use(koaLogger())
+
+if (config.nodeEnv !== 'test') {
+    app.use(koaLogger())
+}
+
 app.use(cors())
 app.use(jwt({ secret: `${config.jwtSecret}` }).unless({ path: [/^\/api\/v1\/auth/] }));
 app.use(router.routes()).use(router.allowedMethods())

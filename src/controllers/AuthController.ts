@@ -14,7 +14,7 @@ export default {
             const validationResult = RegisterRequest.validate(request);
 
             if (validationResult.error) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = validationResult.response
                 return
             }
@@ -22,7 +22,7 @@ export default {
             const dbUser = await UserRepository.getByEmail(request.email, ['id'])
 
             if (dbUser) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1005]
                 return
             }
@@ -36,7 +36,7 @@ export default {
             ctx.status = 201
             ctx.body = apiMessages[2001]
         } catch (error: any) {
-            ctx.status = 500;
+            ctx.status = 500
             ctx.body = { message: error.message }
         }
     },
@@ -46,7 +46,7 @@ export default {
             const validationResult = LoginRequest.validate(request);
 
             if (validationResult.error) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = validationResult.response
                 return
             }
@@ -54,7 +54,7 @@ export default {
             const dbUser = await UserRepository.getByEmail(request.email, ['password'])
 
             if (!dbUser || !bcrypt.compareSync(request.password, dbUser.password)) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1020]
                 return
             }
@@ -66,7 +66,7 @@ export default {
                 }
             }
         } catch (error: any) {
-            ctx.status = 500;
+            ctx.status = 500
             ctx.body = { message: error.message }
         }
     },

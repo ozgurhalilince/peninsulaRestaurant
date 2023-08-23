@@ -11,6 +11,11 @@ beforeAll(done => {
     done()
 })
 
+afterAll(done => {
+    mongoose.connection.close()
+    done()
+})
+
 describe('auth tests', () => {
     it('should throw 401 if no authorization header', (done) => {
         request(server.callback())
@@ -105,17 +110,9 @@ describe('auth tests', () => {
         };
 
         User.create(userData).then(() => {
-            const payload = {
-                firstname: 'John',
-                lastname: 'Doe',
-                email: userData.email,
-                password: bcrypt.hashSync('example', 5),
-                isDeleted: false,
-            }
-
             request(server.callback())
                 .post('/api/v1/auth/register')
-                .send(payload)
+                .send(userData)
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1005])
@@ -252,9 +249,4 @@ describe('auth tests', () => {
                 });
         });
     })
-})
-
-afterAll(done => {
-    mongoose.connection.close()
-    done()
 })

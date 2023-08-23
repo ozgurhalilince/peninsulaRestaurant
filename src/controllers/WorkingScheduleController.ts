@@ -10,7 +10,7 @@ export default {
             ctx.status = 200
             ctx.body = { data: workingSchedules }
         } catch (error: any) {
-            ctx.status = error.statusCode || error.status || 500;
+            ctx.status = 500
             ctx.body = { message: error.message }
         }
     },
@@ -20,7 +20,7 @@ export default {
                 .getById(['id', 'openingTime', 'closingTime'], ctx.params.id)
 
             if (!workingSchedule) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1051]
                 return
             }
@@ -30,11 +30,11 @@ export default {
 
             if (requestBody.closingTime) {
                 if (requestBody.closingTime > 24) {
-                    ctx.status = 400;
+                    ctx.status = 400
                     ctx.body = apiMessages[1056]
                     return
                 } else if (requestBody.closingTime < 1) {
-                    ctx.status = 400;
+                    ctx.status = 400
                     ctx.body = apiMessages[1055]
                     return
                 }
@@ -50,11 +50,11 @@ export default {
 
             if (requestBody.openingTime) {
                 if (requestBody.openingTime > 23) {
-                    ctx.status = 400;
+                    ctx.status = 400
                     ctx.body = apiMessages[1054]
                     return
                 } else if (requestBody.openingTime < 0) {
-                    ctx.status = 400;
+                    ctx.status = 400
                     ctx.body = apiMessages[1053]
                     return
                 }
@@ -69,7 +69,7 @@ export default {
             }
 
             if (isOpeningTimeLater) {
-                ctx.status = 400;
+                ctx.status = 400
                 ctx.body = apiMessages[1052]
                 return
             }
@@ -85,7 +85,7 @@ export default {
 
             ctx.status = 204
         } catch (error: any) {
-            ctx.status = error.statusCode || error.status || 500;
+            ctx.status = 500
             ctx.body = { message: error.message }
         }
     },
