@@ -1,8 +1,8 @@
 import request from 'supertest';
 import assert from 'assert';
-import server from '../src/index';
-import apiMessages from "../src/utils/apiMessages";
-import User from "../src/models/User";
+import server from '../../src/server';
+import apiMessages from "../../src/utils/apiMessages";
+import User from "../../src/models/User";
 import bcrypt from "bcryptjs";
 import mongoose from 'mongoose';
 
