@@ -1,5 +1,10 @@
 import apiMessages from "../../../utils/apiMessages";
 
+export interface ILoginRequest {
+    email: String,
+    password: string,
+}
+
 export default {
     validate: (requestBody: { email: String; password: String }) => {
         if (!requestBody.email) {
