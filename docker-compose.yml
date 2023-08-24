@@ -10,6 +10,7 @@ services:
     build:
       context: ./
       dockerfile: ./docker/api.dockerfile
+      target: dev
     ports:
       - "3000:3000"
     working_dir: /var/www
@@ -19,6 +20,27 @@ services:
       PORT: 3000
       MONGODB_URI: mongodb://mongodb:27017
       DB_NAME: sample-db
+      NODE_ENV: dev
+    depends_on: 
+      - mongo
+    networks:
+      - restaurant
+
+  test:
+    tty: true
+    image : test
+    container_name: test
+    build:
+      context: ./
+      dockerfile: ./docker/api.dockerfile
+      target: test
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017
+      DB_NAME: sample-test-db
+      NODE_ENV: test
     depends_on: 
       - mongo
     networks:

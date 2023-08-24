@@ -28,6 +28,12 @@ After seeding you will have
 - dummy daily working hours for a week
 - dummy tables for the restaurant
 
+
+Running tests
+```
+docker exec -it test npm test
+```
+
 ### Architecture
 
 The architecture of the "Peninsula Restaurant" API project has been carefully designed, incorporating a set of technologies that align with the project's requirements and objectives. The selected technologies offer a range of benefits that contribute to the project's efficiency, scalability, maintainability and the ability to handle evolving requirements.
@@ -60,11 +66,12 @@ MongoDB, a NoSQL database, was chosen for its flexibility and scalability. In a 
 -   **Scalability:** MongoDB's horizontal scaling capabilities support the potential growth of the restaurant's data, ensuring the system can handle increased demand.
 -   **Document-Oriented:** Storing data in documents enhances data locality and reduces the need for complex joins, which can lead to improved query performance.
 -   
+
+##### JEST
+Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
+
 ##### Swagger [not yet]
 Simplify API development for users, teams, and enterprises with the Swagger open source and professional toolset. Find out how Swagger can help you design and document your APIs at scale.
-
-##### JEST [not yet]
-Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
 
 ##### Node-cron [not yet]
 The node-cron module is tiny task scheduler in pure JavaScript for node.js based on GNU crontab. This module allows you to schedule task in node.js using full crontab syntax.
