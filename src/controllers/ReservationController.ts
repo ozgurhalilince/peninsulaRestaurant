@@ -1,10 +1,9 @@
 import { Context } from 'koa'
 import ReservationRepository from "../repositories/ReservationRepository";
 import StoreRequest, { IStoreRequest } from "../http/requests/reservation/StoreRequest";
-import TableRepository from "../repositories/TableRepository";
 import apiMessages from "../utils/apiMessages";
-import WorkingScheduleRepository from "../repositories/WorkingScheduleRepository";
 import ReservationEnums from "../enums/reservationEnums";
+import ReservationService from '../services/ReservationService';
 
 export default {
     index: async (ctx: Context): Promise<any> => {
@@ -29,62 +28,17 @@ export default {
                 return
             }
 
-            const table = await TableRepository.getById(['id', 'seatCount'], request.tableId)
+            const updateResponse = await ReservationService.store(request)
 
-            if (!table) {
-                ctx.status = 400
-                ctx.body = apiMessages[1043]
-                return
-            } else if (table.seatCount < request.numberOfPeople) {
-                ctx.status = 400
-                ctx.body = apiMessages[1073]
+            if (!updateResponse.isSuccess) {
+                ctx.status = updateResponse.code
+                ctx.body = updateResponse.result
                 return
             }
 
-            const date = new Date(request.date)
-            const requestedDayIndex = date.getUTCDay()
-            const requestedHour = date.getHours()
-            const workingScheduleDay = await WorkingScheduleRepository.getByDayIndex(requestedDayIndex);
+            ctx.status = 204
 
-            if (!workingScheduleDay) {
-                ctx.status = 400
-                ctx.body = apiMessages[1077]
-                return
-            }
-
-            if (!workingScheduleDay.isOpen) {
-                ctx.status = 400
-                ctx.body = apiMessages[1076]
-                return
-            }
-
-            if (workingScheduleDay.openingTime > requestedHour) {
-                ctx.status = 400
-                ctx.body = apiMessages[1076]
-                return
-            } else if (workingScheduleDay.closingTime < requestedHour) {
-                ctx.status = 400
-                ctx.body = apiMessages[1076]
-                return
-            }
-
-            const activeReservation = await ReservationRepository.get('active', request.date)
-
-            if (activeReservation.length > 0) {
-                ctx.status = 400
-                ctx.body = apiMessages[1078]
-                return
-            }
-
-            const reservation = await ReservationRepository.create({
-                customerFirstname: request.customerFirstname,
-                customerLastname: request.customerLastname,
-                numberOfPeople: request.numberOfPeople,
-                date: request.date,
-                table: request.tableId,
-            })
             ctx.status = 201
-            ctx.body = { data: reservation }
         } catch (error: any) {
             ctx.status = 500
             ctx.body = { message: error.message }

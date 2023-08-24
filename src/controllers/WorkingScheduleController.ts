@@ -15,11 +15,11 @@ export default {
     update: async (ctx: Context): Promise<any> => {
         try {
             const request = <IUpdateRequest>ctx.request.body
-            const updateResult = await WorkingScheduleService.update(ctx.params.id, request)
+            const updateResponse = await WorkingScheduleService.update(ctx.params.id, request)
 
-            if (!updateResult.isSuccess) {
-                ctx.status = updateResult.code
-                ctx.body = updateResult.result
+            if (!updateResponse.isSuccess) {
+                ctx.status = updateResponse.code
+                ctx.body = updateResponse.result
                 return
             }
 
