@@ -17,11 +17,12 @@ export default {
         return Reservation.find(filters).exec()
     },
     create: async (fields: {
-        customerFirstname: string;
-        customerLastname: string;
         numberOfPeople: number;
         date: string;
         table: string;
+        customerFirstname: string;
+        customerLastname: string;
+        customerEmail?: string;
     }) => {
         return Reservation.create(fields)
     },
@@ -32,6 +33,7 @@ export default {
         id: string,
         customerFirstname?: string,
         customerLastname?: string,
+        customerEmail?: string,
         status?: string
     ) => {
         const updateData: Record<string, any> = {}
@@ -42,6 +44,10 @@ export default {
 
         if (typeof customerLastname !== 'undefined') {
             updateData.customerLastname = customerLastname
+        }
+
+        if (typeof customerEmail !== 'undefined') {
+            updateData.customerEmail = customerEmail
         }
 
         if (typeof status !== 'undefined') {

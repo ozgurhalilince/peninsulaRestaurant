@@ -44,6 +44,7 @@ export default {
         await ReservationRepository.create({
             customerFirstname: request.customerFirstname,
             customerLastname: request.customerLastname,
+            customerEmail: request.customerEmail,
             numberOfPeople: request.numberOfPeople,
             date: request.date,
             table: request.tableId,

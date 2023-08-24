@@ -6,6 +6,7 @@ export interface IStoreRequest {
     tableId: string,
     customerFirstname: string,
     customerLastname: string,
+    customerEmail?: string,
 }
 
 export default {
@@ -15,6 +16,7 @@ export default {
         tableId: string,
         customerFirstname: string,
         customerLastname: string,
+        customerEmail?: string,
     }) => {
         if (typeof requestBody === 'undefined') {
             return { error: true, response: apiMessages[1070] }

@@ -5,6 +5,7 @@ export interface IReservation {
     _id: string,
     customerFirstname: string,
     customerLastname: string,
+    customerEmail: string,
     numberOfPeople: number,
     date: string,
     status: string,
@@ -17,6 +18,7 @@ mongoose.Promise = global.Promise;
 const ReservationSchema = new Schema({
     customerFirstname: { type: String, required: true },
     customerLastname: { type: String, required: true },
+    customerEmail: { type: String },
     numberOfPeople: { type: Number, required: true },
     date: { type: Date, required: true },
     status: { type: String, enum: ['active', 'deleted', 'cancelled', 'completed'], default: 'active' },

@@ -4,6 +4,7 @@ import StoreRequest, { IStoreRequest } from "../http/requests/reservation/StoreR
 import apiMessages from "../utils/apiMessages";
 import ReservationEnums from "../enums/reservationEnums";
 import ReservationService from '../services/ReservationService';
+import { IUpdateRequest } from '../http/requests/reservation/UpdateRequest';
 
 export default {
     index: async (ctx: Context): Promise<any> => {
@@ -36,8 +37,6 @@ export default {
                 return
             }
 
-            ctx.status = 204
-
             ctx.status = 201
         } catch (error: any) {
             ctx.status = 500
@@ -46,6 +45,7 @@ export default {
     },
     update: async (ctx: Context): Promise<any> => {
         try {
+            const request = <IUpdateRequest>ctx.request.body;
             const reservation = await ReservationRepository.getById(['id', 'status'], ctx.params.id)
 
             if (!reservation) {
@@ -54,8 +54,8 @@ export default {
                 return
             }
 
-            if (typeof ctx.request.body.status !== 'undefined'
-                && !ReservationEnums.ALL_AVAILABLE_STATUSES.includes(ctx.request.body.status)) {
+            if (typeof request.status !== 'undefined'
+                && !ReservationEnums.ALL_AVAILABLE_STATUSES.includes(request.status)) {
                 ctx.status = 400
                 ctx.body = apiMessages[1080]
                 return
@@ -67,9 +67,10 @@ export default {
 
             await ReservationRepository.update(
                 ctx.params.id,
-                ctx.request.body.customerFirstname,
-                ctx.request.body.customerLastname,
-                ctx.request.body.status,
+                request.customerFirstname,
+                request.customerLastname,
+                request.customerEmail,
+                request.status,
             )
 
             ctx.status = 204
