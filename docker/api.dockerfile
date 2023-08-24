@@ -42,12 +42,11 @@ COPY --from=linter /var/www ./
 ENTRYPOINT [ "npm", "run", "dev" ]
 
 # for build
-# @TODO ADD Builder later and copy production files from dist
-#FROM linter as builder
+FROM linter as builder
 
-#WORKDIR /var/www
+WORKDIR /var/www
 
-#RUN npm run build
+RUN npm run build
 
 # for production
 
@@ -65,6 +64,6 @@ COPY package*.json ./
 
 RUN npm install --only=production
 
-COPY --from=linter /var/www ./
+COPY --from=builder /var/www/dist ./
 
 ENTRYPOINT [ "npm", "run", "prod" ]

@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import { ITable } from './Table'
+import reservationEnums from '../enums/reservationEnums';
 
 export interface IReservation {
     _id: string,
@@ -21,7 +22,7 @@ const ReservationSchema = new Schema({
     customerEmail: { type: String },
     numberOfPeople: { type: Number, required: true },
     date: { type: Date, required: true },
-    status: { type: String, enum: ['active', 'deleted', 'cancelled', 'completed'], default: 'active' },
+    status: { type: String, enum: reservationEnums.ALL_AVAILABLE_STATUSES, default: 'active' },
     table: { type: Schema.Types.ObjectId, ref: 'Table' }
 })
 
