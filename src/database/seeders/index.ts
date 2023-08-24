@@ -6,7 +6,7 @@ import Table from "../../models/Table";
 import WorkingSchedule from "../../models/WorkingSchedule";
 
 mongoose.connect(config.mongoUri, { dbName: config.dbName })
-    .then(async (mongooseConnection) => {
+    .then(async () => {
         await mongoose.connection.db.dropDatabase()
         await seedUsers()
         await seedTables()

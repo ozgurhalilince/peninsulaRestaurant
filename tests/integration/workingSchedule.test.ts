@@ -69,7 +69,7 @@ describe('workingSchedule tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1051])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
 
                 return done();
@@ -84,7 +84,7 @@ describe('workingSchedule tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1051])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
 
                 return done();
@@ -102,7 +102,7 @@ describe('workingSchedule tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1056])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     return done();
@@ -121,7 +121,7 @@ describe('workingSchedule tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1055])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     return done();
@@ -140,7 +140,7 @@ describe('workingSchedule tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1054])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     return done();
@@ -159,7 +159,7 @@ describe('workingSchedule tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1053])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     return done();
@@ -179,7 +179,7 @@ describe('workingSchedule tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1052])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     return done();
@@ -198,7 +198,7 @@ describe('workingSchedule tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1052])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     return done();
@@ -217,7 +217,7 @@ describe('workingSchedule tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1052])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     return done();
@@ -237,7 +237,7 @@ describe('workingSchedule tests', () => {
                 .set('Accept', 'application/json')
                 .set('Authorization', 'Bearer ' + token)
                 .expect(204)
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
 
                     WorkingSchedule.findById(workingSchedule?._id.toString()).then((afterUpdateResult) => {
@@ -256,7 +256,7 @@ describe('workingSchedule tests', () => {
             .get('/api/v1/working-schedules')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -265,7 +265,7 @@ describe('workingSchedule tests', () => {
             .put('/api/v1/working-schedules/1')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });

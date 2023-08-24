@@ -5,7 +5,7 @@ export interface IWorkingSchedule {
     utcDayIndex: number,
     openingTime: number,
     closingTime: number,
-    isOpen: Boolean
+    isOpen: boolean
 }
 
 const schema = new Schema<IWorkingSchedule>({

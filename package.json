@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
+    "lint": "eslint .",
     "db:seed": "npx ts-node src/database/seeders/index.ts",
     "start-server": "npm run dev",
     "test": "jest --runInBand --detectOpenHandles --forceExit"
@@ -37,6 +38,10 @@
     "@types/koa": "^2.13.8",
     "@types/node": "^20.5.3",
     "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "eslint": "^8.47.0",
+    "lint": "^1.1.2",
     "nodemon": "^3.0.1",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",

@@ -41,7 +41,7 @@ export default {
             return new ManualResponse(false, 400, apiMessages[1078])
         }
 
-        const reservation = await ReservationRepository.create({
+        await ReservationRepository.create({
             customerFirstname: request.customerFirstname,
             customerLastname: request.customerLastname,
             numberOfPeople: request.numberOfPeople,

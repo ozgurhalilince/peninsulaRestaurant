@@ -68,7 +68,7 @@ describe('table tests', () => {
             .set('Authorization', 'Bearer ' + token)
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1040])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -85,7 +85,7 @@ describe('table tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1040])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -102,7 +102,7 @@ describe('table tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1041])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -120,7 +120,7 @@ describe('table tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(201)
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -134,7 +134,7 @@ describe('table tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1043])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
 
                 return done();
@@ -177,7 +177,7 @@ describe('table tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1043])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
 
                 return done();
@@ -199,7 +199,7 @@ describe('table tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .set('Accept', 'application/json')
                 .expect(204)
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
                     
                     Table.findById(createdTable._id.toString())
@@ -223,7 +223,7 @@ describe('table tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1043])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
 
                 return done();
@@ -241,7 +241,7 @@ describe('table tests', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .set('Accept', 'application/json')
                 .expect(204)
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
                     
                     Table.findById(createdTable._id.toString())
@@ -261,7 +261,7 @@ describe('table tests', () => {
             .get('/api/v1/tables')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -269,7 +269,7 @@ describe('table tests', () => {
             .post('/api/v1/tables')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -277,7 +277,7 @@ describe('table tests', () => {
             .get('/api/v1/tables/1')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -285,7 +285,7 @@ describe('table tests', () => {
             .put('/api/v1/tables/1')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -293,7 +293,7 @@ describe('table tests', () => {
             .del('/api/v1/tables/1')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });

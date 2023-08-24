@@ -22,10 +22,10 @@ describe('auth tests', () => {
             .get('/')
             .expect(401)
             .expect('Authentication Error')
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
-            });;
+            });
     })
 
     it('register - should return email is required', (done) => {
@@ -40,7 +40,7 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1001])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -58,7 +58,7 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1002])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -76,7 +76,7 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1003])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -94,7 +94,7 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1004])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -116,7 +116,7 @@ describe('auth tests', () => {
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1005])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
                     return done();
                 });
@@ -137,8 +137,8 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(201)
-            .end(function(err, res) {
-                if (err) return done(err);
+            .end(function(err) {
+                if (err) return done(err)
                 return done();
             });
     })
@@ -153,7 +153,7 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1001])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -169,7 +169,7 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1002])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -186,7 +186,7 @@ describe('auth tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, apiMessages[1020])
-            .end(function(err, response) {
+            .end(function(err) {
                 if (err) return done(err);
                 return done();
             });
@@ -213,7 +213,7 @@ describe('auth tests', () => {
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(400, apiMessages[1020])
-                .end(function(err, response) {
+                .end(function(err) {
                     if (err) return done(err);
                     return done();
                 });

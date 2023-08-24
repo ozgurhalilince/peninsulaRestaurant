@@ -18,7 +18,7 @@ export default {
     create: async (fields: { name: string; seatCount: number; description?: string }) => {
         return Table.create(fields)
     },
-    update: async (id: string, seatCount?: number, description?: string, isDeleted?: Boolean) => {
+    update: async (id: string, seatCount?: number, description?: string, isDeleted?: boolean) => {
         const updateData: Record<string, any> = {}
 
         if (typeof seatCount !== 'undefined') {

@@ -4,7 +4,6 @@ import UserRepository from "../repositories/UserRepository";
 export default {
   index: async (ctx: Context): Promise<any> => {
     try {
-      const query = ctx.request.query
       const users = await UserRepository.get(['name', 'email'])
 
       ctx.status = 200

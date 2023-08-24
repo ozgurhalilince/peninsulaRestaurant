@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
 import { ITable } from './Table'
-import Table from "./Table";
 
 export interface IReservation {
     _id: string,
