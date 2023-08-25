@@ -5,6 +5,9 @@ import apiMessages from "../utils/apiMessages";
 import ReservationEnums from "../enums/reservationEnums";
 import ReservationService from '../services/ReservationService';
 import { IUpdateRequest } from '../http/requests/reservation/UpdateRequest';
+import emailSenderProducer from '../consumers/emailSenderProducer'
+import config from "../utils/config"
+import emailSenderEnums from '../enums/emailSenderEnums';
 
 export default {
     index: async (ctx: Context): Promise<any> => {
@@ -29,16 +32,20 @@ export default {
                 return
             }
 
-            const updateResponse = await ReservationService.store(request)
+            const createResponse = await ReservationService.store(request)
 
-            if (!updateResponse.isSuccess) {
-                ctx.status = updateResponse.code
-                ctx.body = updateResponse.result
+            if (!createResponse.isSuccess) {
+                ctx.status = createResponse.code
+                ctx.body = createResponse.result
                 return
             }
 
+            emailSenderProducer(config.amqpUrl, emailSenderEnums.RMQ_CHANNEL, JSON.stringify(request))
+
             ctx.status = 201
         } catch (error: any) {
+            console.log(error)
+        
             ctx.status = 500
             ctx.body = { message: error.message }
         }

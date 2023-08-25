@@ -7,6 +7,7 @@
     "dev": "cross-env NODE_ENV=dev nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
     "prod": "cross-env NODE_ENV=production nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
     "lint": "eslint .",
+    "build": "tsc",
     "db:seed": "npx ts-node src/database/seeders/index.ts",
     "start-server": "npm run dev",
     "test": "jest --runInBand --detectOpenHandles --forceExit"
@@ -19,9 +20,11 @@
     "@types/koa__cors": "^4.0.0",
     "@types/koa__router": "^12.0.0",
     "@types/koa-logger": "^3.1.2",
+    "amqplib": "^0.10.3",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
     "koa": "^2.14.2",
     "koa-body": "^6.0.1",
@@ -33,6 +36,7 @@
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.1",
     "@types/bcrypt": "^5.0.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^29.5.4",

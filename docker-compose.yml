@@ -46,6 +46,26 @@ services:
     networks:
       - restaurant
 
+  consumers:
+    tty: true
+    image : consumers
+    container_name: consumers
+    build:
+      context: ./
+      dockerfile: ./docker/api.dockerfile
+      target: consumers
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017
+      DB_NAME: sample-db
+      NODE_ENV: consumers
+    depends_on: 
+      - mongo
+    networks:
+      - restaurant
+
   mongo:
     container_name: mongo
     image: mongo:latest
@@ -74,6 +94,18 @@ services:
       - restaurant
     depends_on:
       - mongo
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - restaurant
 
 volumes:
   mongodb_data: {}

@@ -14,12 +14,16 @@ RUN npm install
 
 COPY . .
 
+
+
 # for lint
 FROM base as linter
 
 WORKDIR /var/www
 
 RUN npm run lint
+
+
 
 # for tests
 FROM base as test
@@ -41,6 +45,27 @@ COPY --from=linter /var/www ./
 
 ENTRYPOINT [ "npm", "run", "dev" ]
 
+
+
+#for dev
+FROM base as consumers
+
+#ENV NODE_ENV=dev
+
+RUN apk add supervisor --update
+
+WORKDIR /var/www
+
+COPY --from=linter /var/www ./
+
+ADD supervisord.conf /etc/supervisord.conf
+RUN mkdir -p /etc/supervisor.d
+ADD supervisor.conf /etc/supervisor.d/supervisor.conf
+
+RUN mkdir -p /var/log/supervisor
+
+CMD /usr/bin/supervisord -n -c /etc/supervisord.conf
+
 # for build
 FROM linter as builder
 
@@ -48,8 +73,8 @@ WORKDIR /var/www
 
 RUN npm run build
 
-# for production
 
+# for production
 FROM node:18.17.1-alpine as production
 
 ENV NODE_ENV=production
