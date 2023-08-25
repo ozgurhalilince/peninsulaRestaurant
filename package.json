@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
-    "prod": "cross-env NODE_ENV=production nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
+    "dev": "npx nodemon ./src/server.ts",
+    "prod": "npx nodemon ./src/server.ts",
     "lint": "eslint .",
     "build": "tsc",
     "db:seed": "npx ts-node src/database/seeders/index.ts",
@@ -22,7 +22,6 @@
     "@types/koa-logger": "^3.1.2",
     "amqplib": "^0.10.3",
     "bcryptjs": "^2.4.3",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
@@ -32,8 +31,7 @@
     "koa-logger": "^3.2.1",
     "koa-response-time": "^2.1.0",
     "mongoose": "^7.4.3",
-    "node-cron": "^3.0.2",
-    "ts-node": "^10.9.1"
+    "node-cron": "^3.0.2"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.1",
@@ -46,9 +44,11 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
     "eslint": "^8.47.0",
     "lint": "^1.1.2",
-    "nodemon": "^3.0.1",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
     "typescript": "^5.1.6"

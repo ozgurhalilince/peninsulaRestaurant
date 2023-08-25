@@ -2,7 +2,6 @@ import amqp, { Connection } from 'amqplib/callback_api'
 
 export default async (amqpUrl: string, queueName: string, message: string) => {
   console.log('Connecting to RabbitMQ...')
-  let ch: any
   amqp.connect(amqpUrl, (errorConnect: Error, connection: Connection) => {
     if (errorConnect) {
       console.log('Error connecting to RabbitMQ: ', errorConnect)

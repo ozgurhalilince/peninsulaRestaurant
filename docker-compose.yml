@@ -16,6 +16,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
+      - /var/www/app/node_modules
     environment:
       PORT: 3000
       MONGODB_URI: mongodb://mongodb:27017
@@ -37,6 +38,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
+      - /var/www/app/node_modules
     environment:
       MONGODB_URI: mongodb://mongodb:27017
       DB_NAME: sample-test-db
